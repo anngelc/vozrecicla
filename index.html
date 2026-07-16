@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>VozRecicla â€” Asistente de voz para reciclaje</title>
+<title>VozRecicla — Asistente de voz para reciclaje</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -86,7 +86,7 @@
     line-height:1.5;
   }
 
-  /* ---- BotÃ³n principal: el "tacho que escucha" ---- */
+  /* ---- Botón principal: el "tacho que escucha" ---- */
   .stage{
     position:relative;
     width:260px;
@@ -302,12 +302,12 @@
 <body>
 
   <div class="brand">
-    <div class="brand-mark">â™»ï¸</div>
+    <div class="brand-mark">♻️</div>
     <div class="brand-name">Voz<span>Recicla</span></div>
   </div>
-  <div class="eyebrow">Proyecto Eureka Â· Colegio Adventista Puno</div>
-  <h1>Â¿A quÃ© tacho va?</h1>
-  <p class="sub">Toca el botÃ³n y di en voz alta quÃ© objeto quieres botar. Te dirÃ© el color exacto.</p>
+  <div class="eyebrow">Proyecto Eureka · Colegio Adventista Puno</div>
+  <h1>¿A qué tacho va?</h1>
+  <p class="sub">Toca el botón y di en voz alta qué objeto quieres botar. Te diré el color exacto.</p>
 
   <div class="stage" id="stage">
     <div class="ring r1"></div>
@@ -320,7 +320,7 @@
         <line x1="12" y1="18" x2="12" y2="22"/>
         <line x1="9" y1="22" x2="15" y2="22"/>
       </svg>
-      <span class="lid-icon" id="lidIcon">â™»ï¸</span>
+      <span class="lid-icon" id="lidIcon">♻️</span>
     </button>
   </div>
 
@@ -334,38 +334,38 @@
 
   <div class="controls">
     <div class="text-fallback">
-      <input type="text" id="textInput" placeholder="O escribe el objeto aquÃ­â€¦" aria-label="Escribe el nombre del residuo">
+      <input type="text" id="textInput" placeholder="O escribe el objeto aquí…" aria-label="Escribe el nombre del residuo">
       <button id="textBtn">Buscar</button>
     </div>
     <button class="reset-btn" id="resetBtn" style="display:none;">Probar con otro objeto</button>
   </div>
 
   <div class="legend">
-    <span class="chip"><span class="dot" style="background:#F4F1EA;border:1px solid #555"></span>Blanco Â· plÃ¡stico y metal</span>
-    <span class="chip"><span class="dot" style="background:#2E6F9E"></span>Azul Â· papel y cartÃ³n</span>
-    <span class="chip"><span class="dot" style="background:#8B5A2B"></span>MarrÃ³n Â· orgÃ¡nico</span>
-    <span class="chip"><span class="dot" style="background:#2B2B2B;border:1px solid #555"></span>Negro Â· no reciclable</span>
-    <span class="chip"><span class="dot" style="background:#2F7A5C"></span>Vidrio Â· punto especial</span>
+    <span class="chip"><span class="dot" style="background:#F4F1EA;border:1px solid #555"></span>Blanco · plástico y metal</span>
+    <span class="chip"><span class="dot" style="background:#2E6F9E"></span>Azul · papel y cartón</span>
+    <span class="chip"><span class="dot" style="background:#8B5A2B"></span>Marrón · orgánico</span>
+    <span class="chip"><span class="dot" style="background:#2B2B2B;border:1px solid #555"></span>Negro · no reciclable</span>
+    <span class="chip"><span class="dot" style="background:#2F7A5C"></span>Vidrio · punto especial</span>
   </div>
 
   <button class="qr-toggle" id="qrToggle">Generar QR para abrir esta app</button>
   <div class="qr-box" id="qrBox">
-    <img id="qrImg" alt="CÃ³digo QR de acceso al asistente">
-    <p>Escanea con la cÃ¡mara del celular para abrir el asistente de reciclaje directamente, sin buscarlo.</p>
+    <img id="qrImg" alt="Código QR de acceso al asistente">
+    <p>Escanea con la cámara del celular para abrir el asistente de reciclaje directamente, sin buscarlo.</p>
   </div>
 
   <div class="credits">
-    <p><span class="escuela">Colegio Adventista Puno</span><br>Proyecto Eureka Â· Itzel Alessandra Quispe Luna</p>
+    <p><span class="escuela">Colegio Adventista Puno</span><br>Proyecto Eureka · Itzel Alessandra Quispe Luna</p>
   </div>
 
   <span id="srAnnounce" class="sr-only" aria-live="assertive"></span>
 
 <script>
-// ---------- Diccionario de residuos (versiÃ³n simplificada, 4 colores) ----------
+// ---------- Diccionario de residuos (versión simplificada, 4 colores) ----------
 const CATEGORIAS = {
   blanco: {
     nombre: "Tacho BLANCO",
-    material: "PlÃ¡stico y metal reciclable",
+    material: "Plástico y metal reciclable",
     bg: "#F4F1EA", text: "#14171C",
     palabras: [
       "botella","botella de plastico","botella descartable","envase","envase de plastico",
@@ -373,7 +373,7 @@ const CATEGORIAS = {
       "tapa de gaseosa","tapa metalica","lata","lata de conserva","lata de gaseosa","lata de atun",
       "aluminio","papel aluminio","metal","chatarra","clavo","alambre","tornillo","olla vieja",
       "sarten viejo","envase de yogurt","vaso descartable","vaso de plastico","plato descartable",
-      "cubierto descartable","cuchara de plastico","tenedor de plastico","sorbete","caÃ±ita","popote",
+      "cubierto descartable","cuchara de plastico","tenedor de plastico","sorbete","cañita","popote",
       "tuper","tupper","envase de champu","envase de shampoo","envase de detergente","envase de lejia",
       "frasco de plastico","bidon","galonera","cd","disco","juguete de plastico","silla de plastico rota",
       "envase de aceite","envase de gaseosa","malla de fruta","envoltura de plastico dura","tecnopor limpio"
@@ -381,7 +381,7 @@ const CATEGORIAS = {
   },
   azul: {
     nombre: "Tacho AZUL",
-    material: "Papel y cartÃ³n",
+    material: "Papel y cartón",
     bg: "#2E6F9E", text: "#FFFFFF",
     palabras: [
       "papel","papel bond","papel bond usado","hoja","hoja de cuaderno","cuaderno","cuaderno viejo",
@@ -392,14 +392,14 @@ const CATEGORIAS = {
     ]
   },
   marron: {
-    nombre: "Tacho MARRÃ“N",
-    material: "Residuo orgÃ¡nico",
+    nombre: "Tacho MARRÓN",
+    material: "Residuo orgánico",
     bg: "#8B5A2B", text: "#FFFFFF",
     palabras: [
       "cascara","cascara de platano","cascara de naranja","cascara de papa","cascara de huevo",
       "cascaron de huevo","resto de comida","comida","sobras de comida","fruta","fruta malograda",
-      "verdura","papa","chuÃ±o","quinua","hueso","hueso de fruta","pepa","semilla","cafe molido",
-      "poso de cafe","te usado","bolsa de te","yerba mate usada","hojas secas","pasto","rama pequeÃ±a",
+      "verdura","papa","chuño","quinua","hueso","hueso de fruta","pepa","semilla","cafe molido",
+      "poso de cafe","te usado","bolsa de te","yerba mate usada","hojas secas","pasto","rama pequeña",
       "flor","flor marchita","chala","chala de choclo","panca","afrecho","pan duro","arroz sobrante",
       "fideo cocido","tallo","cascara de cebolla","cascara de zanahoria"
     ]
@@ -409,17 +409,17 @@ const CATEGORIAS = {
     material: "No reciclable / general",
     bg: "#2B2B2B", text: "#FFFFFF",
     palabras: [
-      "papel higienico usado","servilleta sucia","papel toalla usado","paÃ±al","paÃ±al desechable",
+      "papel higienico usado","servilleta sucia","papel toalla usado","pañal","pañal desechable",
       "curita","toalla higienica","algodon usado","chicle","colilla","colilla de cigarro","ceniza",
       "fosforo usado","envoltura de golosina","envoltura de galleta","envoltura metalizada",
       "empaque de fideos instantaneos","foco","foco malogrado","ampolleta","tecnopor sucio","icopor sucio",
-      "mascarilla","mascarilla usada","guante descartable","pila","pilas","bateria pequeÃ±a","esponja usada",
+      "mascarilla","mascarilla usada","guante descartable","pila","pilas","bateria pequeña","esponja usada",
       "trapo sucio","polvo","tierra de barrido"
     ]
   },
   especial: {
     nombre: "Punto especial de VIDRIO",
-    material: "No va en los 4 tachos comunes â€” requiere manejo aparte",
+    material: "No va en los 4 tachos comunes — requiere manejo aparte",
     bg: "#2F7A5C", text: "#FFFFFF",
     palabras: [
       "vidrio","botella de vidrio","frasco de vidrio","copa","vaso de vidrio","foco de vidrio",
@@ -444,7 +444,7 @@ function buscarCategoria(textoOriginal){
   for (const key in CATEGORIAS){
     if (CATEGORIAS[key].palabras.some(p => texto.includes(p))) return key;
   }
-  // 3. o al revÃ©s: lo dicho aparece dentro de una palabra clave
+  // 3. o al revés: lo dicho aparece dentro de una palabra clave
   for (const key in CATEGORIAS){
     if (CATEGORIAS[key].palabras.some(p => p.includes(texto) && texto.length > 3)) return key;
   }
@@ -478,18 +478,18 @@ function mostrarResultado(objetoDicho){
   const key = buscarCategoria(objetoDicho);
 
   if (!key){
-    statusEl.textContent = "No lo identifiquÃ©";
-    transcriptEl.textContent = objetoDicho ? `EscuchÃ©: "${objetoDicho}"` : "";
+    statusEl.textContent = "No lo identifiqué";
+    transcriptEl.textContent = objetoDicho ? `Escuché: "${objetoDicho}"` : "";
     resultCard.classList.remove('show');
-    hablar(`No logrÃ© identificar "${objetoDicho}". Intenta con otra palabra.`);
-    srAnnounce.textContent = `No se identificÃ³ el objeto ${objetoDicho}`;
+    hablar(`No logré identificar "${objetoDicho}". Intenta con otra palabra.`);
+    srAnnounce.textContent = `No se identificó el objeto ${objetoDicho}`;
     resetBtn.style.display = 'block';
     return;
   }
 
   const cat = CATEGORIAS[key];
-  statusEl.textContent = "Â¡Encontrado!";
-  transcriptEl.textContent = `EscuchÃ©: "${objetoDicho}"`;
+  statusEl.textContent = "¡Encontrado!";
+  transcriptEl.textContent = `Escuché: "${objetoDicho}"`;
 
   micBtn.classList.add('result');
   micBtn.style.setProperty('--result-bg', cat.bg);
@@ -520,19 +520,19 @@ function resetear(){
 }
 resetBtn.addEventListener('click', resetear);
 
-// ---------- DiagnÃ³stico de entorno ----------
+// ---------- Diagnóstico de entorno ----------
 function diagnosticoEntorno(){
   const problemas = [];
   if (!window.isSecureContext){
     problemas.push({
       tipo: 'no-https',
-      mensaje: 'Esta pÃ¡gina no estÃ¡ abierta con https://. El micrÃ³fono del navegador solo funciona en conexiones seguras (https) o al abrir el archivo con un servidor local. Si la abriste directamente desde tus archivos (file://), por eso no funciona.'
+      mensaje: 'Esta página no está abierta con https://. El micrófono del navegador solo funciona en conexiones seguras (https) o al abrir el archivo con un servidor local. Si la abriste directamente desde tus archivos (file://), por eso no funciona.'
     });
   }
   if (!navigator.onLine){
     problemas.push({
       tipo: 'sin-internet',
-      mensaje: 'No hay conexiÃ³n a internet. El reconocimiento de voz de Chrome necesita internet para funcionar, aunque la app se vea igual sin conexiÃ³n.'
+      mensaje: 'No hay conexión a internet. El reconocimiento de voz de Chrome necesita internet para funcionar, aunque la app se vea igual sin conexión.'
     });
   }
   return problemas;
@@ -542,7 +542,7 @@ function mostrarAvisoEntorno(){
   const problemas = diagnosticoEntorno();
   if (problemas.length === 0) return false;
   statusEl.textContent = "Reconocimiento de voz no disponible";
-  transcriptEl.innerHTML = problemas.map(p => `âš ï¸ ${p.mensaje}`).join('<br><br>');
+  transcriptEl.innerHTML = problemas.map(p => `⚠️ ${p.mensaje}`).join('<br><br>');
   transcriptEl.style.fontStyle = 'normal';
   transcriptEl.style.color = '#E4572E';
   return true;
@@ -562,7 +562,7 @@ if (SpeechRecognitionAPI){
   recognition.onstart = () => {
     escuchando = true;
     stage.classList.add('listening');
-    statusEl.textContent = "Escuchandoâ€¦";
+    statusEl.textContent = "Escuchando…";
     transcriptEl.textContent = "";
   };
 
@@ -574,11 +574,11 @@ if (SpeechRecognitionAPI){
   recognition.onerror = (event) => {
     statusEl.textContent = "No se pudo escuchar";
     const mensajes = {
-      'not-allowed': 'Bloqueaste el permiso del micrÃ³fono. Ve a los ajustes del navegador (Ã­cono de candado junto a la URL) y permite el micrÃ³fono para este sitio.',
-      'service-not-allowed': 'El navegador bloqueÃ³ el servicio de voz. Prueba abrir la app desde una direcciÃ³n https:// en vez de un archivo local.',
-      'audio-capture': 'No se detectÃ³ ningÃºn micrÃ³fono disponible en el celular.',
-      'network': 'Se necesita conexiÃ³n a internet para el reconocimiento de voz. Revisa tu conexiÃ³n.',
-      'no-speech': 'No detectÃ© que dijeras algo. Intenta de nuevo, hablando cerca del micrÃ³fono.'
+      'not-allowed': 'Bloqueaste el permiso del micrófono. Ve a los ajustes del navegador (ícono de candado junto a la URL) y permite el micrófono para este sitio.',
+      'service-not-allowed': 'El navegador bloqueó el servicio de voz. Prueba abrir la app desde una dirección https:// en vez de un archivo local.',
+      'audio-capture': 'No se detectó ningún micrófono disponible en el celular.',
+      'network': 'Se necesita conexión a internet para el reconocimiento de voz. Revisa tu conexión.',
+      'no-speech': 'No detecté que dijeras algo. Intenta de nuevo, hablando cerca del micrófono.'
     };
     transcriptEl.textContent = mensajes[event.error] || 'Intenta de nuevo o escribe el objeto abajo.';
   };
@@ -594,7 +594,7 @@ if (SpeechRecognitionAPI){
 
 // Bienvenida hablada al cargar (una sola vez)
 window.addEventListener('load', () => {
-  setTimeout(() => hablar("Bienvenido a VozRecicla. Toca el botÃ³n y dime quÃ© objeto quieres botar."), 400);
+  setTimeout(() => hablar("Bienvenido a VozRecicla. Toca el botón y dime qué objeto quieres botar."), 400);
 });
 
 micBtn.addEventListener('click', () => {
