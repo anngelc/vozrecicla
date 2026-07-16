@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>VozRecicla — Asistente de voz para reciclaje</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151A;
+    --surface:#1C2029;
+    --surface-2:#242938;
+    --text:#F2F0EA;
+    --muted:#9AA0AC;
+    --accent:#E4572E;
+    --accent-dim:#7A2E1A;
+    --blanco-bg:#F4F1EA;
+    --blanco-text:#14171C;
+    --azul:#2E6F9E;
+    --marron:#8B5A2B;
+    --negro:#2B2B2B;
+    --ring:#3A4152;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 50% -10%, #1E2430 0%, var(--bg) 55%);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:28px 18px 40px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:14px;
+  }
+  .brand-mark{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    background:linear-gradient(160deg,var(--accent),var(--accent-dim));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    box-shadow:0 4px 14px -4px rgba(228,87,46,.6);
+  }
+  .brand-name{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    font-size:19px;
+    letter-spacing:-0.01em;
+  }
+  .brand-name span{color:var(--accent);}
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    font-size:26px;
+    line-height:1.15;
+    text-align:center;
+    margin:0 0 6px;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:14.5px;
+    text-align:center;
+    max-width:320px;
+    margin:0 0 30px;
+    line-height:1.5;
+  }
+
+  /* ---- Botón principal: el "tacho que escucha" ---- */
+  .stage{
+    position:relative;
+    width:260px;
+    height:260px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:22px;
+  }
+  .ring{
+    position:absolute;
+    border-radius:50%;
+    border:2px solid var(--ring);
+    opacity:0;
+  }
+  .ring.r1{width:180px;height:180px;}
+  .ring.r2{width:220px;height:220px;}
+  .ring.r3{width:260px;height:260px;}
+  .stage.listening .ring{
+    animation:pulse 1.8s ease-out infinite;
+    border-color:var(--accent);
+  }
+  .stage.listening .ring.r2{animation-delay:.3s;}
+  .stage.listening .ring.r3{animation-delay:.6s;}
+  @keyframes pulse{
+    0%{transform:scale(.82);opacity:.55;}
+    100%{transform:scale(1.08);opacity:0;}
+  }
+
+  .mic-btn{
+    position:relative;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(160deg,var(--accent),var(--accent-dim));
+    box-shadow:0 10px 30px -6px rgba(228,87,46,.55), inset 0 2px 0 rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform .18s ease, background .4s ease, box-shadow .4s ease;
+    color:#fff;
+  }
+  .mic-btn:active{transform:scale(.94);}
+  .mic-btn svg{width:52px;height:52px;}
+
+  .mic-btn.result{
+    background:var(--result-bg,var(--surface));
+    box-shadow:0 10px 34px -6px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.08);
+  }
+  .mic-btn.result .lid-icon{display:block;}
+  .mic-btn.result svg.mic-icon{display:none;}
+
+  .lid-icon{display:none;font-size:52px;line-height:1;}
+
+  .status{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:600;
+    font-size:17px;
+    min-height:24px;
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:4px;
+  }
+  .transcript{
+    font-size:14px;
+    color:var(--muted);
+    text-align:center;
+    min-height:20px;
+    margin-bottom:18px;
+    font-style:italic;
+  }
+
+  /* ---- Tarjeta de resultado ---- */
+  .result-card{
+    width:100%;
+    max-width:340px;
+    border-radius:22px;
+    padding:22px 20px;
+    text-align:center;
+    display:none;
+    margin-bottom:18px;
+    animation:rise .35s ease;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .result-card.show{display:block;}
+  .result-card .tacho-nombre{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    font-size:24px;
+    margin:0 0 4px;
+  }
+  .result-card .material{
+    font-size:14.5px;
+    opacity:.85;
+    margin:0;
+  }
+
+  /* ---- Controles ---- */
+  .controls{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    width:100%;
+    max-width:340px;
+  }
+  .text-fallback{
+    display:flex;
+    width:100%;
+    gap:8px;
+  }
+  .text-fallback input{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--ring);
+    border-radius:14px;
+    padding:12px 14px;
+    color:var(--text);
+    font-size:15px;
+    font-family:'Inter',sans-serif;
+  }
+  .text-fallback input::placeholder{color:var(--muted);}
+  .text-fallback button, .reset-btn{
+    background:var(--surface-2);
+    border:1px solid var(--ring);
+    color:var(--text);
+    border-radius:14px;
+    padding:12px 16px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .reset-btn{width:100%;background:transparent;border:1px solid var(--ring);color:var(--muted);}
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    margin:22px 0 6px;
+    max-width:340px;
+  }
+  .chip{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 11px;
+    border-radius:999px;
+    background:var(--surface);
+    border:1px solid var(--ring);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+
+  .qr-toggle{
+    margin-top:26px;
+    background:none;
+    border:1px dashed var(--ring);
+    color:var(--muted);
+    border-radius:14px;
+    padding:10px 16px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+  }
+  .qr-box{
+    display:none;
+    margin-top:14px;
+    background:var(--surface);
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+    max-width:220px;
+  }
+  .qr-box.show{display:block;}
+  .qr-box img{width:170px;height:170px;border-radius:10px;background:#fff;padding:8px;}
+  .qr-box p{font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.4;}
+
+  .credits{
+    margin-top:32px;
+    padding-top:18px;
+    border-top:1px solid var(--ring);
+    width:100%;
+    max-width:340px;
+    text-align:center;
+  }
+  .credits p{
+    margin:0;
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.6;
+    letter-spacing:0.01em;
+  }
+  .credits .escuela{
+    font-weight:600;
+    color:#C9CDD6;
+  }
+
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stage.listening .ring{animation:none;opacity:.4;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="brand">
+    <div class="brand-mark">♻️</div>
+    <div class="brand-name">Voz<span>Recicla</span></div>
+  </div>
+  <div class="eyebrow">Proyecto Eureka · Colegio Adventista Puno</div>
+  <h1>¿A qué tacho va?</h1>
+  <p class="sub">Toca el botón y di en voz alta qué objeto quieres botar. Te diré el color exacto.</p>
+
+  <div class="stage" id="stage">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <button class="mic-btn" id="micBtn" aria-label="Presiona y habla">
+      <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/>
+        <path d="M19 11a7 7 0 0 1-14 0"/>
+        <line x1="12" y1="18" x2="12" y2="22"/>
+        <line x1="9" y1="22" x2="15" y2="22"/>
+      </svg>
+      <span class="lid-icon" id="lidIcon">♻️</span>
+    </button>
+  </div>
+
+  <p class="status" id="status" aria-live="polite">Toca para hablar</p>
+  <p class="transcript" id="transcript"></p>
+
+  <div class="result-card" id="resultCard" role="status">
+    <p class="tacho-nombre" id="tachoNombre"></p>
+    <p class="material" id="tachoMaterial"></p>
+  </div>
+
+  <div class="controls">
+    <div class="text-fallback">
+      <input type="text" id="textInput" placeholder="O escribe el objeto aquí…" aria-label="Escribe el nombre del residuo">
+      <button id="textBtn">Buscar</button>
+    </div>
+    <button class="reset-btn" id="resetBtn" style="display:none;">Probar con otro objeto</button>
+  </div>
+
+  <div class="legend">
+    <span class="chip"><span class="dot" style="background:#F4F1EA;border:1px solid #555"></span>Blanco · plástico y metal</span>
+    <span class="chip"><span class="dot" style="background:#2E6F9E"></span>Azul · papel y cartón</span>
+    <span class="chip"><span class="dot" style="background:#8B5A2B"></span>Marrón · orgánico</span>
+    <span class="chip"><span class="dot" style="background:#2B2B2B;border:1px solid #555"></span>Negro · no reciclable</span>
+  </div>
+
+  <button class="qr-toggle" id="qrToggle">Generar QR para abrir esta app</button>
+  <div class="qr-box" id="qrBox">
+    <img id="qrImg" alt="Código QR de acceso al asistente">
+    <p>Escanea con la cámara del celular para abrir el asistente de reciclaje directamente, sin buscarlo.</p>
+  </div>
+
+  <div class="credits">
+    <p><span class="escuela">Colegio Adventista Puno</span><br>Proyecto Eureka · Itzel Alessandra Quispe Luna</p>
+  </div>
+
+  <span id="srAnnounce" class="sr-only" aria-live="assertive"></span>
+
+<script>
+// ---------- Diccionario de residuos (versión simplificada, 4 colores) ----------
+const CATEGORIAS = {
+  blanco: {
+    nombre: "Tacho BLANCO",
+    material: "Plástico y metal reciclable",
+    bg: "#F4F1EA", text: "#14171C",
+    palabras: [
+      "botella","botella de plastico","envase","envase de plastico","plastico",
+      "bolsa","bolsa de plastico","tapa","tapa de botella","lata","lata de conserva",
+      "lata de gaseosa","aluminio","metal","chatarra","envase de yogurt","vaso descartable",
+      "cubierto descartable","tuper","tupper","envase de champu","frasco de plastico","cd"
+    ]
+  },
+  azul: {
+    nombre: "Tacho AZUL",
+    material: "Papel y cartón",
+    bg: "#2E6F9E", text: "#FFFFFF",
+    palabras: [
+      "papel","papel bond","hoja","cuaderno","cartón","carton","caja de carton",
+      "caja","periodico","revista","folleto","volante","cartulina","sobre de papel",
+      "papel higienico limpio","tetrapak vacio"
+    ]
+  },
+  marron: {
+    nombre: "Tacho MARRÓN",
+    material: "Residuo orgánico",
+    bg: "#8B5A2B", text: "#FFFFFF",
+    palabras: [
+      "cascara","cascara de platano","cascara de naranja","resto de comida","comida",
+      "fruta","verdura","hueso","cafe molido","hojas secas","pasto","flor",
+      "cascaron de huevo","te usado","bolsa de te","poso de cafe"
+    ]
+  },
+  negro: {
+    nombre: "Tacho NEGRO",
+    material: "No reciclable / general",
+    bg: "#2B2B2B", text: "#FFFFFF",
+    palabras: [
+      "papel higienico usado","servilleta sucia","pañal","curita","chicle",
+      "colilla","ceniza","envoltura de golosina","envoltura metalizada",
+      "foco","tecnopor","icopor","mascarilla","guante"
+    ]
+  }
+};
+
+function normalizar(txt){
+  return txt.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .trim();
+}
+
+function buscarCategoria(textoOriginal){
+  const texto = normalizar(textoOriginal);
+  // 1. coincidencia exacta de alguna palabra
+  for (const key in CATEGORIAS){
+    if (CATEGORIAS[key].palabras.some(p => p === texto)) return key;
+  }
+  // 2. coincidencia parcial (la palabra clave aparece dentro de lo dicho)
+  for (const key in CATEGORIAS){
+    if (CATEGORIAS[key].palabras.some(p => texto.includes(p))) return key;
+  }
+  // 3. o al revés: lo dicho aparece dentro de una palabra clave
+  for (const key in CATEGORIAS){
+    if (CATEGORIAS[key].palabras.some(p => p.includes(texto) && texto.length > 3)) return key;
+  }
+  return null;
+}
+
+// ---------- Elementos ----------
+const stage = document.getElementById('stage');
+const micBtn = document.getElementById('micBtn');
+const lidIcon = document.getElementById('lidIcon');
+const statusEl = document.getElementById('status');
+const transcriptEl = document.getElementById('transcript');
+const resultCard = document.getElementById('resultCard');
+const tachoNombre = document.getElementById('tachoNombre');
+const tachoMaterial = document.getElementById('tachoMaterial');
+const resetBtn = document.getElementById('resetBtn');
+const textInput = document.getElementById('textInput');
+const textBtn = document.getElementById('textBtn');
+const srAnnounce = document.getElementById('srAnnounce');
+
+function hablar(texto){
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(texto);
+  u.lang = 'es-PE';
+  u.rate = 0.98;
+  window.speechSynthesis.speak(u);
+}
+
+function mostrarResultado(objetoDicho){
+  const key = buscarCategoria(objetoDicho);
+
+  if (!key){
+    statusEl.textContent = "No lo identifiqué";
+    transcriptEl.textContent = objetoDicho ? `Escuché: "${objetoDicho}"` : "";
+    resultCard.classList.remove('show');
+    hablar(`No logré identificar "${objetoDicho}". Intenta con otra palabra.`);
+    srAnnounce.textContent = `No se identificó el objeto ${objetoDicho}`;
+    resetBtn.style.display = 'block';
+    return;
+  }
+
+  const cat = CATEGORIAS[key];
+  statusEl.textContent = "¡Encontrado!";
+  transcriptEl.textContent = `Escuché: "${objetoDicho}"`;
+
+  micBtn.classList.add('result');
+  micBtn.style.setProperty('--result-bg', cat.bg);
+  lidIcon.style.color = cat.text;
+
+  resultCard.style.background = cat.bg;
+  resultCard.style.color = cat.text;
+  tachoNombre.textContent = cat.nombre;
+  tachoNombre.style.color = cat.text;
+  tachoMaterial.textContent = cat.material;
+  tachoMaterial.style.color = cat.text;
+  resultCard.classList.add('show');
+
+  const mensaje = `${objetoDicho} va en el ${cat.nombre.toLowerCase()}, de ${cat.material.toLowerCase()}.`;
+  hablar(mensaje);
+  srAnnounce.textContent = mensaje;
+  resetBtn.style.display = 'block';
+}
+
+function resetear(){
+  stage.classList.remove('listening');
+  micBtn.classList.remove('result');
+  statusEl.textContent = "Toca para hablar";
+  transcriptEl.textContent = "";
+  resultCard.classList.remove('show');
+  resetBtn.style.display = 'none';
+  textInput.value = "";
+}
+resetBtn.addEventListener('click', resetear);
+
+// ---------- Diagnóstico de entorno ----------
+function diagnosticoEntorno(){
+  const problemas = [];
+  if (!window.isSecureContext){
+    problemas.push({
+      tipo: 'no-https',
+      mensaje: 'Esta página no está abierta con https://. El micrófono del navegador solo funciona en conexiones seguras (https) o al abrir el archivo con un servidor local. Si la abriste directamente desde tus archivos (file://), por eso no funciona.'
+    });
+  }
+  if (!navigator.onLine){
+    problemas.push({
+      tipo: 'sin-internet',
+      mensaje: 'No hay conexión a internet. El reconocimiento de voz de Chrome necesita internet para funcionar, aunque la app se vea igual sin conexión.'
+    });
+  }
+  return problemas;
+}
+
+function mostrarAvisoEntorno(){
+  const problemas = diagnosticoEntorno();
+  if (problemas.length === 0) return false;
+  statusEl.textContent = "Reconocimiento de voz no disponible";
+  transcriptEl.innerHTML = problemas.map(p => `⚠️ ${p.mensaje}`).join('<br><br>');
+  transcriptEl.style.fontStyle = 'normal';
+  transcriptEl.style.color = '#E4572E';
+  return true;
+}
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let escuchando = false;
+
+if (SpeechRecognitionAPI){
+  const hayProblemaEntorno = mostrarAvisoEntorno();
+  recognition = new SpeechRecognitionAPI();
+  recognition.lang = 'es-PE';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    escuchando = true;
+    stage.classList.add('listening');
+    statusEl.textContent = "Escuchando…";
+    transcriptEl.textContent = "";
+  };
+
+  recognition.onresult = (event) => {
+    const texto = event.results[0][0].transcript;
+    mostrarResultado(texto);
+  };
+
+  recognition.onerror = (event) => {
+    statusEl.textContent = "No se pudo escuchar";
+    const mensajes = {
+      'not-allowed': 'Bloqueaste el permiso del micrófono. Ve a los ajustes del navegador (ícono de candado junto a la URL) y permite el micrófono para este sitio.',
+      'service-not-allowed': 'El navegador bloqueó el servicio de voz. Prueba abrir la app desde una dirección https:// en vez de un archivo local.',
+      'audio-capture': 'No se detectó ningún micrófono disponible en el celular.',
+      'network': 'Se necesita conexión a internet para el reconocimiento de voz. Revisa tu conexión.',
+      'no-speech': 'No detecté que dijeras algo. Intenta de nuevo, hablando cerca del micrófono.'
+    };
+    transcriptEl.textContent = mensajes[event.error] || 'Intenta de nuevo o escribe el objeto abajo.';
+  };
+
+  recognition.onend = () => {
+    escuchando = false;
+    stage.classList.remove('listening');
+  };
+} else {
+  statusEl.textContent = "Usa el buscador de texto";
+  transcriptEl.textContent = "Este navegador no soporta reconocimiento de voz.";
+}
+
+// Bienvenida hablada al cargar (una sola vez)
+window.addEventListener('load', () => {
+  setTimeout(() => hablar("Bienvenido a VozRecicla. Toca el botón y dime qué objeto quieres botar."), 400);
+});
+
+micBtn.addEventListener('click', () => {
+  if (!recognition) return;
+  if (escuchando) { recognition.stop(); return; }
+  resultCard.classList.remove('show');
+  micBtn.classList.remove('result');
+  resetBtn.style.display = 'none';
+  try { recognition.start(); } catch(e) { /* ya estaba iniciado */ }
+});
+
+// ---------- Fallback de texto ----------
+function buscarPorTexto(){
+  const val = textInput.value.trim();
+  if (!val) return;
+  resultCard.classList.remove('show');
+  micBtn.classList.remove('result');
+  mostrarResultado(val);
+}
+textBtn.addEventListener('click', buscarPorTexto);
+textInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') buscarPorTexto(); });
+
+// ---------- QR de acceso ----------
+const qrToggle = document.getElementById('qrToggle');
+const qrBox = document.getElementById('qrBox');
+const qrImg = document.getElementById('qrImg');
+let qrGenerado = false;
+
+qrToggle.addEventListener('click', () => {
+  if (!qrGenerado){
+    const url = window.location.href;
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+    qrGenerado = true;
+  }
+  qrBox.classList.toggle('show');
+});
+</script>
+</body>
+</html>
