@@ -8,71 +8,104 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#12151A;
-    --surface:#1C2029;
-    --surface-2:#242938;
-    --text:#F2F0EA;
-    --muted:#9AA0AC;
-    --accent:#E4572E;
-    --accent-dim:#7A2E1A;
-    --blanco-bg:#F4F1EA;
-    --blanco-text:#14171C;
-    --azul:#2E6F9E;
-    --marron:#8B5A2B;
-    --negro:#2B2B2B;
-    --ring:#3A4152;
+    --bg-1:#1B0F2E;
+    --bg-2:#12081F;
+    --surface:#241536;
+    --surface-2:#2E1D45;
+    --text:#F6F3FA;
+    --muted:#B6A9CC;
+    --accent-a:#FF3D68;
+    --accent-b:#FFB800;
+    --ring:#3F2A5C;
+
+    --blanco-bg:#F4F1EA; --blanco-text:#14171C;
+    --azul:#2E6F9E;      --azul-text:#FFFFFF;
+    --verde:#2F9E6F;     --verde-text:#FFFFFF;
+    --marron:#8B5A2B;    --marron-text:#FFFFFF;
+    --amarillo:#F4C430;  --amarillo-text:#1A1400;
+    --negro:#242424;     --negro-text:#FFFFFF;
+    --rojo:#E23B3B;      --rojo-text:#FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     background:
-      radial-gradient(circle at 50% -10%, #1E2430 0%, var(--bg) 55%);
+      radial-gradient(circle at 15% 0%, rgba(255,61,104,.18) 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(255,184,0,.14) 0%, transparent 42%),
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
     color:var(--text);
     font-family:'Inter',sans-serif;
     min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:28px 18px 40px;
+    padding:26px 18px 40px;
     -webkit-tap-highlight-color:transparent;
   }
+
+  /* ---- Cabecera institucional ---- */
+  .header-inst{
+    width:100%;
+    max-width:380px;
+    text-align:center;
+    padding-bottom:16px;
+    margin-bottom:14px;
+    border-bottom:1px solid var(--ring);
+  }
+  .header-inst .colegio{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .header-inst .alumna{
+    font-size:12px;
+    color:var(--muted);
+    opacity:.85;
+    margin-top:2px;
+  }
+
   .brand{
     display:flex;
     align-items:center;
-    gap:9px;
-    margin-bottom:14px;
+    gap:10px;
+    margin-bottom:6px;
   }
   .brand-mark{
-    width:34px;
-    height:34px;
-    border-radius:10px;
-    background:linear-gradient(160deg,var(--accent),var(--accent-dim));
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:linear-gradient(155deg,var(--accent-a),var(--accent-b));
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:17px;
-    box-shadow:0 4px 14px -4px rgba(228,87,46,.6);
+    font-size:19px;
+    box-shadow:0 6px 18px -4px rgba(255,61,104,.55);
   }
   .brand-name{
     font-family:'Baloo 2',sans-serif;
     font-weight:800;
-    font-size:19px;
+    font-size:22px;
     letter-spacing:-0.01em;
+    background:linear-gradient(100deg,var(--accent-a),var(--accent-b));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
   }
-  .brand-name span{color:var(--accent);}
   .eyebrow{
     font-family:'Inter',sans-serif;
-    font-size:12px;
+    font-size:11.5px;
     letter-spacing:0.14em;
     text-transform:uppercase;
-    color:var(--accent);
+    color:var(--accent-b);
     font-weight:700;
     margin-bottom:6px;
   }
   h1{
     font-family:'Baloo 2',sans-serif;
     font-weight:800;
-    font-size:26px;
+    font-size:25px;
     line-height:1.15;
     text-align:center;
     margin:0 0 6px;
@@ -82,11 +115,11 @@
     font-size:14.5px;
     text-align:center;
     max-width:320px;
-    margin:0 0 30px;
+    margin:0 0 26px;
     line-height:1.5;
   }
 
-  /* ---- Botón principal: el "tacho que escucha" ---- */
+  /* ---- Botón principal ---- */
   .stage{
     position:relative;
     width:260px;
@@ -94,7 +127,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    margin-bottom:22px;
+    margin-bottom:20px;
   }
   .ring{
     position:absolute;
@@ -107,12 +140,12 @@
   .ring.r3{width:260px;height:260px;}
   .stage.listening .ring{
     animation:pulse 1.8s ease-out infinite;
-    border-color:var(--accent);
+    border-color:var(--accent-a);
   }
   .stage.listening .ring.r2{animation-delay:.3s;}
   .stage.listening .ring.r3{animation-delay:.6s;}
   @keyframes pulse{
-    0%{transform:scale(.82);opacity:.55;}
+    0%{transform:scale(.82);opacity:.6;}
     100%{transform:scale(1.08);opacity:0;}
   }
 
@@ -122,8 +155,8 @@
     height:150px;
     border-radius:50%;
     border:none;
-    background:linear-gradient(160deg,var(--accent),var(--accent-dim));
-    box-shadow:0 10px 30px -6px rgba(228,87,46,.55), inset 0 2px 0 rgba(255,255,255,.15);
+    background:linear-gradient(155deg,var(--accent-a),var(--accent-b));
+    box-shadow:0 12px 32px -6px rgba(255,61,104,.55), inset 0 2px 0 rgba(255,255,255,.2);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -136,11 +169,10 @@
 
   .mic-btn.result{
     background:var(--result-bg,var(--surface));
-    box-shadow:0 10px 34px -6px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.08);
+    box-shadow:0 10px 34px -6px rgba(0,0,0,.55), inset 0 2px 0 rgba(255,255,255,.1);
   }
   .mic-btn.result .lid-icon{display:block;}
   .mic-btn.result svg.mic-icon{display:none;}
-
   .lid-icon{display:none;font-size:52px;line-height:1;}
 
   .status{
@@ -182,7 +214,7 @@
   }
   .result-card .material{
     font-size:14.5px;
-    opacity:.85;
+    opacity:.9;
     margin:0;
   }
 
@@ -230,7 +262,7 @@
     gap:8px;
     justify-content:center;
     margin:22px 0 6px;
-    max-width:340px;
+    max-width:360px;
   }
   .chip{
     display:flex;
@@ -240,7 +272,7 @@
     border-radius:999px;
     background:var(--surface);
     border:1px solid var(--ring);
-    font-size:12px;
+    font-size:11.5px;
     color:var(--muted);
   }
   .dot{width:9px;height:9px;border-radius:50%;flex:none;}
@@ -269,26 +301,6 @@
   .qr-box img{width:170px;height:170px;border-radius:10px;background:#fff;padding:8px;}
   .qr-box p{font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.4;}
 
-  .credits{
-    margin-top:32px;
-    padding-top:18px;
-    border-top:1px solid var(--ring);
-    width:100%;
-    max-width:340px;
-    text-align:center;
-  }
-  .credits p{
-    margin:0;
-    font-size:11.5px;
-    color:var(--muted);
-    line-height:1.6;
-    letter-spacing:0.01em;
-  }
-  .credits .escuela{
-    font-weight:600;
-    color:#C9CDD6;
-  }
-
   .sr-only{
     position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
@@ -301,13 +313,18 @@
 </head>
 <body>
 
-  <div class="brand">
-    <div class="brand-mark">♻️</div>
-    <div class="brand-name">Voz<span>Recicla</span></div>
+  <div class="header-inst">
+    <div class="brand" style="justify-content:center;">
+      <div class="brand-mark">♻️</div>
+      <div class="brand-name">VozRecicla</div>
+    </div>
+    <div class="colegio">Colegio Adventista Puno</div>
+    <div class="alumna">Proyecto Eureka · Itzel Alessandra Quispe Luna</div>
   </div>
-  <div class="eyebrow">Proyecto Eureka · Colegio Adventista Puno</div>
+
+  <div class="eyebrow">Clasificación por voz · NTP 900.058</div>
   <h1>¿A qué tacho va?</h1>
-  <p class="sub">Toca el botón y di en voz alta qué objeto quieres botar. Te diré el color exacto.</p>
+  <p class="sub">Toca el botón y di en voz alta qué objeto quieres botar. Te diré el color exacto según la norma peruana.</p>
 
   <div class="stage" id="stage">
     <div class="ring r1"></div>
@@ -341,11 +358,13 @@
   </div>
 
   <div class="legend">
-    <span class="chip"><span class="dot" style="background:#F4F1EA;border:1px solid #555"></span>Blanco · plástico y metal</span>
+    <span class="chip"><span class="dot" style="background:#F4F1EA;border:1px solid #555"></span>Blanco · plástico</span>
     <span class="chip"><span class="dot" style="background:#2E6F9E"></span>Azul · papel y cartón</span>
+    <span class="chip"><span class="dot" style="background:#2F9E6F"></span>Verde · vidrio</span>
     <span class="chip"><span class="dot" style="background:#8B5A2B"></span>Marrón · orgánico</span>
-    <span class="chip"><span class="dot" style="background:#2B2B2B;border:1px solid #555"></span>Negro · no reciclable</span>
-    <span class="chip"><span class="dot" style="background:#2F7A5C"></span>Vidrio · punto especial</span>
+    <span class="chip"><span class="dot" style="background:#F4C430"></span>Amarillo · metal</span>
+    <span class="chip"><span class="dot" style="background:#242424;border:1px solid #555"></span>Negro · generales</span>
+    <span class="chip"><span class="dot" style="background:#E23B3B"></span>Rojo · peligrosos</span>
   </div>
 
   <button class="qr-toggle" id="qrToggle">Generar QR para abrir esta app</button>
@@ -354,76 +373,111 @@
     <p>Escanea con la cámara del celular para abrir el asistente de reciclaje directamente, sin buscarlo.</p>
   </div>
 
-  <div class="credits">
-    <p><span class="escuela">Colegio Adventista Puno</span><br>Proyecto Eureka · Itzel Alessandra Quispe Luna</p>
-  </div>
-
   <span id="srAnnounce" class="sr-only" aria-live="assertive"></span>
 
 <script>
-// ---------- Diccionario de residuos (versión simplificada, 4 colores) ----------
+// ---------- Diccionario de residuos — 7 colores oficiales NTP 900.058 ----------
 const CATEGORIAS = {
   blanco: {
     nombre: "Tacho BLANCO",
-    material: "Plástico y metal reciclable",
-    bg: "#F4F1EA", text: "#14171C",
+    material: "Plástico",
+    bg: "var(--blanco-bg)", text: "var(--blanco-text)",
     palabras: [
-      "botella","botella de plastico","botella descartable","envase","envase de plastico",
-      "plastico","bolsa","bolsa de plastico","funda de plastico","tapa","tapa de botella",
-      "tapa de gaseosa","tapa metalica","lata","lata de conserva","lata de gaseosa","lata de atun",
-      "aluminio","papel aluminio","metal","chatarra","clavo","alambre","tornillo","olla vieja",
-      "sarten viejo","envase de yogurt","vaso descartable","vaso de plastico","plato descartable",
-      "cubierto descartable","cuchara de plastico","tenedor de plastico","sorbete","cañita","popote",
-      "tuper","tupper","envase de champu","envase de shampoo","envase de detergente","envase de lejia",
-      "frasco de plastico","bidon","galonera","cd","disco","juguete de plastico","silla de plastico rota",
-      "envase de aceite","envase de gaseosa","malla de fruta","envoltura de plastico dura","tecnopor limpio"
+      "botella","botella de plastico","botella descartable","botella de agua","envase","envase de plastico",
+      "plastico","bolsa","bolsa de plastico","funda de plastico","bolsa de papitas","bolsa de snack",
+      "tapa de botella","envase de yogurt","yogurt tetrapak","vaso descartable","vaso de plastico",
+      "plato descartable","cubierto descartable","cuchara de plastico","tenedor de plastico",
+      "sorbete","cañita","popote","tuper","tupper","lonchera rota","envase de champu","envase de shampoo",
+      "envase de detergente","envase de lejia","frasco de plastico","bidon","galonera","cd","disco",
+      "juguete de plastico","silla de plastico rota","envase de aceite","envase de gaseosa",
+      "malla de fruta","envoltura de plastico dura","tecnopor limpio","manguera vieja",
+      "lapicero sin tinta","lapicero malogrado","regla de plastico","regla de plastico rota",
+      "tajador de plastico roto","borrador de plastico","estuche de plastico roto","folder plastico",
+      "fólder de plastico","mica","forro de cuaderno","forro plastico","carpeta de plastico",
+      "silicona vacia","frasco de goma vacio","frasco de tempera vacio","corrector liquido vacio",
+      "resaltador seco","plumon sin tinta","plumon acrilico vacio","marcador permanente vacio",
+      "envase de alcohol en gel","gel antibacterial vacio","botella de alcohol vacia",
+      "envoltura de lonchera","bolsa de refrigerio","carnet escolar roto"
     ]
   },
   azul: {
     nombre: "Tacho AZUL",
     material: "Papel y cartón",
-    bg: "#2E6F9E", text: "#FFFFFF",
+    bg: "var(--azul)", text: "var(--azul-text)",
     palabras: [
-      "papel","papel bond","papel bond usado","hoja","hoja de cuaderno","cuaderno","cuaderno viejo",
-      "carton","caja de carton","caja","caja de zapatos","caja de cereal","periodico","papel periodico",
-      "revista","folleto","volante","afiche","cartulina","sobre de papel","papel higienico limpio",
-      "tetrapak vacio","guia telefonica","hojas de examen","papel kraft","rollo de carton vacio",
-      "empaque de carton","factura","recibo","ticket"
+      "papel","papel bond","papel bond usado","hoja","hoja de cuaderno","hoja de examen","hoja malograda",
+      "cuaderno","cuaderno viejo","cuaderno de fin de año","carton","caja de carton","caja",
+      "caja de zapatos","caja de cereal","periodico","papel periodico","revista","folleto","volante",
+      "afiche","cartulina","cartulina de trabajo","sobre de papel","papel higienico limpio",
+      "tetrapak vacio","guia telefonica","hojas de examen","examen rendido","practica calificada",
+      "papel kraft","rollo de carton vacio","empaque de carton","factura","recibo","ticket",
+      "libro viejo","libro roto","separata","separata de clase","tarea impresa","impresion mal hecha",
+      "hoja de reciclaje","papel periodico mural","cartel escolar","diploma viejo","agenda escolar vieja"
+    ]
+  },
+  verde: {
+    nombre: "Tacho VERDE",
+    material: "Vidrio",
+    bg: "var(--verde)", text: "var(--verde-text)",
+    palabras: [
+      "vidrio","botella de vidrio","frasco de vidrio","copa","vaso de vidrio","foco de vidrio roto",
+      "espejo roto","ventana rota","envase de vidrio","frasco de mermelada","botella de licor",
+      "botella de vino","frasco de conserva","frasco de laboratorio roto","tubo de ensayo roto",
+      "vidrio de reloj roto","lente roto","luna de ventana rota"
     ]
   },
   marron: {
     nombre: "Tacho MARRÓN",
     material: "Residuo orgánico",
-    bg: "#8B5A2B", text: "#FFFFFF",
+    bg: "var(--marron)", text: "var(--marron-text)",
     palabras: [
       "cascara","cascara de platano","cascara de naranja","cascara de papa","cascara de huevo",
-      "cascaron de huevo","resto de comida","comida","sobras de comida","fruta","fruta malograda",
-      "verdura","papa","chuño","quinua","hueso","hueso de fruta","pepa","semilla","cafe molido",
-      "poso de cafe","te usado","bolsa de te","yerba mate usada","hojas secas","pasto","rama pequeña",
-      "flor","flor marchita","chala","chala de choclo","panca","afrecho","pan duro","arroz sobrante",
-      "fideo cocido","tallo","cascara de cebolla","cascara de zanahoria"
+      "cascaron de huevo","resto de comida","comida","sobras de comida","sobras del recreo",
+      "resto del refrigerio","fruta","fruta malograda","fruta del recreo","verdura","papa","chuño",
+      "quinua","hueso","hueso de fruta","pepa","semilla","cafe molido","poso de cafe","te usado",
+      "bolsa de te","yerba mate usada","hojas secas","pasto","rama pequeña","flor","flor marchita",
+      "chala","chala de choclo","panca","afrecho","pan duro","pan del recreo","migajas de pan",
+      "arroz sobrante","fideo cocido","tallo","cascara de cebolla","cascara de zanahoria",
+      "mondadura de fruta","resto de lonchera","cascara de mandarina","cascara de manzana"
+    ]
+  },
+  amarillo: {
+    nombre: "Tacho AMARILLO",
+    material: "Metal",
+    bg: "var(--amarillo)", text: "var(--amarillo-text)",
+    palabras: [
+      "lata","lata de conserva","lata de gaseosa","lata de atun","aluminio","papel aluminio",
+      "metal","chatarra","clavo","alambre","tornillo","olla vieja","sarten viejo","tapa metalica",
+      "llave vieja","cuchara metalica rota","cubierto metalico viejo","tapa de gaseosa",
+      "compas metalico roto","tajador metalico roto","clip metalico","grapa","grampas usadas",
+      "regla metalica rota","moneda inservible"
     ]
   },
   negro: {
     nombre: "Tacho NEGRO",
-    material: "No reciclable / general",
-    bg: "#2B2B2B", text: "#FFFFFF",
+    material: "Residuos generales / no reciclables",
+    bg: "var(--negro)", text: "var(--negro-text)",
     palabras: [
       "papel higienico usado","servilleta sucia","papel toalla usado","pañal","pañal desechable",
-      "curita","toalla higienica","algodon usado","chicle","colilla","colilla de cigarro","ceniza",
-      "fosforo usado","envoltura de golosina","envoltura de galleta","envoltura metalizada",
-      "empaque de fideos instantaneos","foco","foco malogrado","ampolleta","tecnopor sucio","icopor sucio",
-      "mascarilla","mascarilla usada","guante descartable","pila","pilas","bateria pequeña","esponja usada",
-      "trapo sucio","polvo","tierra de barrido"
+      "toalla higienica","algodon usado","chicle","ceniza","fosforo usado",
+      "envoltura de golosina","envoltura de galleta","envoltura metalizada","envoltura de caramelo",
+      "empaque de fideos instantaneos","tecnopor sucio","icopor sucio","plastilina seca","plastilina usada",
+      "mascarilla","mascarilla usada","guante descartable","esponja usada","cinta adhesiva usada",
+      "trapo sucio","polvo","tierra de barrido","colilla","colilla de cigarro","tiza usada",
+      "mota de tiza","borrador de pizarra gastado","goma de borrar gastada","uniforme roto",
+      "polo malogrado","envoltura de galletas del recreo","servilleta del comedor"
     ]
   },
-  especial: {
-    nombre: "Punto especial de VIDRIO",
-    material: "No va en los 4 tachos comunes — requiere manejo aparte",
-    bg: "#2F7A5C", text: "#FFFFFF",
+  rojo: {
+    nombre: "Tacho ROJO",
+    material: "Residuo peligroso",
+    bg: "var(--rojo)", text: "var(--rojo-text)",
     palabras: [
-      "vidrio","botella de vidrio","frasco de vidrio","copa","vaso de vidrio","foco de vidrio",
-      "espejo roto","ventana rota","envase de vidrio","frasco de mermelada","botella de licor"
+      "pila","pilas","bateria pequeña","bateria","foco","foco malogrado","ampolleta","fluorescente",
+      "termometro roto","jeringa","aguja","curita usada","material biocontaminado","insecticida vacio",
+      "envase de pesticida","medicamento vencido","pastilla vencida","bateria de calculadora",
+      "bateria de laptop","cargador malogrado","cable electrico pelado","corrector toxico vacio",
+      "silicona caliente derramada","pintura vencida","frasco de pegamento toxico vacio"
     ]
   }
 };
@@ -436,15 +490,12 @@ function normalizar(txt){
 
 function buscarCategoria(textoOriginal){
   const texto = normalizar(textoOriginal);
-  // 1. coincidencia exacta de alguna palabra
   for (const key in CATEGORIAS){
     if (CATEGORIAS[key].palabras.some(p => p === texto)) return key;
   }
-  // 2. coincidencia parcial (la palabra clave aparece dentro de lo dicho)
   for (const key in CATEGORIAS){
     if (CATEGORIAS[key].palabras.some(p => texto.includes(p))) return key;
   }
-  // 3. o al revés: lo dicho aparece dentro de una palabra clave
   for (const key in CATEGORIAS){
     if (CATEGORIAS[key].palabras.some(p => p.includes(texto) && texto.length > 3)) return key;
   }
@@ -464,6 +515,12 @@ const resetBtn = document.getElementById('resetBtn');
 const textInput = document.getElementById('textInput');
 const textBtn = document.getElementById('textBtn');
 const srAnnounce = document.getElementById('srAnnounce');
+
+function resolverColor(varExpr){
+  // Resuelve una expresión var(--xxx) al valor real de color computado en :root
+  const nombreVar = varExpr.match(/--[a-z0-9-]+/i)[0];
+  return getComputedStyle(document.documentElement).getPropertyValue(nombreVar).trim();
+}
 
 function hablar(texto){
   if (!('speechSynthesis' in window)) return;
@@ -488,19 +545,22 @@ function mostrarResultado(objetoDicho){
   }
 
   const cat = CATEGORIAS[key];
+  const bgReal = resolverColor(cat.bg);
+  const textReal = resolverColor(cat.text);
+
   statusEl.textContent = "¡Encontrado!";
   transcriptEl.textContent = `Escuché: "${objetoDicho}"`;
 
   micBtn.classList.add('result');
-  micBtn.style.setProperty('--result-bg', cat.bg);
-  lidIcon.style.color = cat.text;
+  micBtn.style.setProperty('--result-bg', bgReal);
+  lidIcon.style.color = textReal;
 
-  resultCard.style.background = cat.bg;
-  resultCard.style.color = cat.text;
+  resultCard.style.background = bgReal;
+  resultCard.style.color = textReal;
   tachoNombre.textContent = cat.nombre;
-  tachoNombre.style.color = cat.text;
+  tachoNombre.style.color = textReal;
   tachoMaterial.textContent = cat.material;
-  tachoMaterial.style.color = cat.text;
+  tachoMaterial.style.color = textReal;
   resultCard.classList.add('show');
 
   const mensaje = `${objetoDicho} va en el ${cat.nombre.toLowerCase()}, de ${cat.material.toLowerCase()}.`;
@@ -544,15 +604,17 @@ function mostrarAvisoEntorno(){
   statusEl.textContent = "Reconocimiento de voz no disponible";
   transcriptEl.innerHTML = problemas.map(p => `⚠️ ${p.mensaje}`).join('<br><br>');
   transcriptEl.style.fontStyle = 'normal';
-  transcriptEl.style.color = '#E4572E';
+  transcriptEl.style.color = '#FF6B6B';
   return true;
 }
+
+// ---------- Reconocimiento de voz ----------
 const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = null;
 let escuchando = false;
 
 if (SpeechRecognitionAPI){
-  const hayProblemaEntorno = mostrarAvisoEntorno();
+  mostrarAvisoEntorno();
   recognition = new SpeechRecognitionAPI();
   recognition.lang = 'es-PE';
   recognition.continuous = false;
