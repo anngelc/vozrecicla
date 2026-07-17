@@ -491,13 +491,13 @@ function normalizar(txt){
 function buscarCategoria(textoOriginal){
   const texto = normalizar(textoOriginal);
   for (const key in CATEGORIAS){
-    if (CATEGORIAS[key].palabras.some(p => p === texto)) return key;
+    if (CATEGORIAS[key].palabras.some(p => normalizar(p) === texto)) return key;
   }
   for (const key in CATEGORIAS){
-    if (CATEGORIAS[key].palabras.some(p => texto.includes(p))) return key;
+    if (CATEGORIAS[key].palabras.some(p => texto.includes(normalizar(p)))) return key;
   }
   for (const key in CATEGORIAS){
-    if (CATEGORIAS[key].palabras.some(p => p.includes(texto) && texto.length > 3)) return key;
+    if (CATEGORIAS[key].palabras.some(p => normalizar(p).includes(texto) && texto.length > 3)) return key;
   }
   return null;
 }
